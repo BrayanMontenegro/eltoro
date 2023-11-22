@@ -1,186 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Container, Card, Form, Row, Col, Modal, FloatingLabel } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa6';
+import React, { useState } from 'react';
+import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
+import Header from '../components/Header';
 
-function VentaComponent() {
-  const [cliente, setClientes] = useState([]);
-  const [productos, setProductos] = useState([]);
+function DetalleVenta({ rol })  {
+  const [Monto, setMonto] = useState('');
+  const [tipo_pago, setTipoPago] = useState('');
+  const [Cantidad, setCantidad] = useState('');
+  const [id_producto, setIdProducto] = useState('');
+  const [id_Cliente, setIdCliente] = useState('');
+  const [fecha, setFecha] = useState('');
 
-  const [fechaVenta, setFechaVenta] = useState('');
-  const [clienteId, setClienteId] = useState('');
-  const [productoId, setProductoId] = useState('');
-  const [monto, setMonto] = useState('');
-  const [tipoPago, setTipoPago] = useState('');
-  const [cantidad, setCantidad] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const [showModal, setShowModal] = useState(false);
+    const formData = {
+      Monto,
+      tipo_pago,
+      Cantidad,
+      id_producto,
+      id_Cliente,
+      fecha,
+    };
 
-  const handleFechaChange = (e) => {
-    setFechaVenta(e.target.value);
-  };
+    console.log('Datos a enviar al servidor:', formData);
 
-  const handleClienteChange = (e) => {
-    setClienteId(e.target.value);
-  };
-
-  const handleProductoChange = (e) => {
-    setProductoId(e.target.value);
-  };
-
-  const handleMontoChange = (e) => {
-    setMonto(e.target.value);
-  };
-
-  const handleTipoPagoChange = (e) => {
-    setTipoPago(e.target.value);
-  };
-
-  const handleCantidadChange = (e) => {
-    setCantidad(e.target.value);
-  };
-
-  const handleSubmit = async () => {
-    // Realizar la solicitud HTTP para insertar la venta y el detalle de la venta en el backend
     try {
-      const response = await fetch('http://localhost:5000/crud/insertVenta', {
+      const response = await fetch('http://localhost:5000/crud/insertDventa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          fecha: fechaVenta,
-        }),
+        body: JSON.stringify(formData),
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
-        // Obtener el ID de la venta recién insertada
-        const ventaData = await response.json();
-        const idVenta = ventaData.id; // Asegúrate de ajustar esto según la respuesta real del servidor
-
-        // Insertar el detalle de la venta
-        await fetch('http://localhost:5000/crud/insertDventa', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Monto: monto,
-            tipo_pago: tipoPago,
-            Cantidad: cantidad,
-            id_producto: productoId,
-            id_venta: idVenta,
-            id_Cliente: clienteId,
-          }),
-        });
-
-        // Cerrar el modal y recargar datos si es necesario
-        setShowModal(false);
+        console.log('Respuesta del servidor:', responseData);
+        alert('Detalle de Venta registrado exitosamente');
+        // Limpiar los estados después de la inserción exitosa
+        setMonto('');
+        setTipoPago('');
+        setCantidad('');
+        setIdProducto('');
+        setIdCliente('');
+        setFecha('');
       } else {
-        console.error('Error al insertar venta:', response.statusText);
+        console.log('Error en la respuesta del servidor:', response.status);
+        alert(`Error: ${responseData.error || 'Error desconocido'}`);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
+      alert('Error en la solicitud al servidor');
     }
   };
 
-  useEffect(() => {
-    // Cargar la lista de clientes y productos al montar el componente
-    fetch('http://localhost:5000/crud/readclientes')
-      .then((response) => response.json())
-      .then((data) => setClientes(data))
-      .catch((error) => console.error('Error al cargar clientes:', error));
-
-    fetch('http://localhost:5000/crud/readproducto')
-      .then((response) => response.json())
-      .then((data) => setProductos(data))
-      .catch((error) => console.error('Error al cargar productos:', error));
-  },[], []);
-
   return (
-    <Container>
-      <Card className="mt-5">
-        <Card.Body>
-          <Card.Title className="mt-3">Nueva Venta</Card.Title>
-          <Form className="mt-4">
-            {/* Campos para la venta */}
-            <Row className="mb-3">
-              <Col>
-                <FloatingLabel controlId="fechaVenta" label="Fecha de Venta">
-                  <Form.Control type="date" value={fechaVenta} onChange={handleFechaChange} />
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel controlId="cliente" label="Cliente">
-                  <Form.Select value={clienteId} onChange={handleClienteChange}>
-                    <option value="">Seleccione un cliente</option>
-                    {cliente.map((cliente) => (
-                      <option key={cliente.id} value={cliente.id}>
-                        {cliente.nombre}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
-            </Row>
+    <div>
+      <Header rol={rol} />
+      <Container>
+        <Card className="mt-3">
+          <Card.Body>
+            <Card.Title>Registro de Detalle de Venta</Card.Title>
+            <Form className="mt-3" onSubmit={handleSubmit}>
+              <Row className="g-3">
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="Monto" label="Monto">
+                    <Form.Control
+                      type="number"
+                      placeholder="Ingrese el monto"
+                      value={Monto}
+                      onChange={(e) => setMonto(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
 
-            {/* Campos para el detalle de la venta */}
-            <Row className="mb-3">
-              <Col>
-                <FloatingLabel controlId="producto" label="Producto">
-                  <Form.Select value={productoId} onChange={handleProductoChange}>
-                    <option value="">Seleccione un producto</option>
-                    {productos.map((producto) => (
-                      <option key={producto.id} value={producto.id}>
-                        {producto.nombre}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel controlId="monto" label="Monto">
-                  <Form.Control type="text" value={monto} onChange={handleMontoChange} />
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel controlId="tipoPago" label="Tipo de Pago">
-                  <Form.Control type="text" value={tipoPago} onChange={handleTipoPagoChange} />
-                </FloatingLabel>
-              </Col>
-              <Col>
-                <FloatingLabel controlId="cantidad" label="Cantidad">
-                  <Form.Control type="text" value={cantidad} onChange={handleCantidadChange} />
-                </FloatingLabel>
-              </Col>
-            </Row>
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="tipo_pago" label="Tipo de Pago">
+                    <Form.Select
+                      value={tipo_pago}
+                      onChange={(e) => setTipoPago(e.target.value)}
+                    >
+                      <option value="">Seleccione el tipo de pago</option>
+                      <option value="Efectivo">Efectivo</option>
+                      <option value="Dijital">Dijital</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
 
-            {/* Botón para abrir el modal */}
-            <Button variant="primary" onClick={() => setShowModal(true)}>
-              <FaPlus /> Nueva Venta
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="Cantidad" label="Cantidad">
+                    <Form.Control
+                      type="number"
+                      placeholder="Ingrese la cantidad"
+                      value={Cantidad}
+                      onChange={(e) => setCantidad(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
 
-      {/* Modal para confirmar la venta */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar Venta</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>¿Desea confirmar la venta?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Confirmar Venta
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="id_producto" label="ID del Producto">
+                    <Form.Control
+                      type="number"
+                      placeholder="Ingrese el ID del producto"
+                      value={id_producto}
+                      onChange={(e) => setIdProducto(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="id_Cliente" label="ID del Cliente">
+                    <Form.Control
+                      type="number"
+                      placeholder="Ingrese el ID del cliente"
+                      value={id_Cliente}
+                      onChange={(e) => setIdCliente(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
+
+                <Col sm="6" md="6" lg="6">
+                  <FloatingLabel controlId="fecha" label="Fecha">
+                    <Form.Control
+                      type="date"
+                      value={fecha}
+                      onChange={(e) => setFecha(e.target.value)}
+                    />
+                  </FloatingLabel>
+                </Col>
+              </Row>
+              <div className="center-button">
+                <Button variant="primary" type="submit" className="mt-3 custom-button" size="lg">
+                  Registrar Detalle de Venta
+                </Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 }
 
-export default VentaComponent;
+export default DetalleVenta;

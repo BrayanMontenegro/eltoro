@@ -9,7 +9,8 @@ import ClienteList from './pages/ClienteList';
 import Login from './pages/Login';
 import Categoria from './pages/Categoria';
 import CategoriaList from './pages/CategoriaList';
-import Ventas from './pages/Venta';
+import DetalleVenta from'./pages/Venta';
+import VentaList from './pages/VentaList';
 
 function App() {
 
@@ -27,7 +28,8 @@ function App() {
         <Route path="/clientelist" element={<ClienteList rol={userRol} />} />
         <Route path="/categoria" element={<Categoria rol={userRol} />} />
         <Route path="/categorialist" element={<CategoriaList rol={userRol} />} />
-        <Route path="/Venta" element={<Ventas rol={userRol} />} />
+        <Route path="/Venta" element={<DetalleVenta rol={userRol} />} />
+        <Route path="/VentaList" element={<VentaList rol={userRol} />} />
       </Routes>
     </Router>
   );

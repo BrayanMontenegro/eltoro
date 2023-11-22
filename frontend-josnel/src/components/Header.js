@@ -67,7 +67,7 @@ function Header({ rol }) {
                   <NavDropdown.Divider />
 
                   <NavDropdown.Item>
-                    <Link to="/ventalist" className="link-unstyled">Lista ventas</Link>
+                    <Link to="/VentaList" className="link-unstyled">Lista ventas</Link>
                   </NavDropdown.Item>
                   
                 </NavDropdown>

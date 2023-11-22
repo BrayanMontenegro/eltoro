@@ -303,22 +303,22 @@ router.post('/insertDventa', (req, res) => {
     tipo_pago,
     Cantidad,
     id_producto,
-    id_venta,
+    fecha,
     id_Cliente,
 
 } = req.body;
 
   // Verifica si se proporcionaron los datos necesarios
-  if (!Monto || !tipo_pago || !Cantidad || !id_producto || !id_venta || !id_Cliente) {
+  if (!Monto || !tipo_pago || !Cantidad || !id_producto || !fecha || !id_Cliente) {
     return res.status(400).json({ error: 'Todos los campos son obligatorios B' });
   }
 
   // Realiza la consulta SQL para insertar un nuevo registro en la tabla "Detalle_Venta"
   const DVentaSql = `
-      INSERT INTO Detalle_Venta (Monto, tipo_pago, Cantidad, id_producto, id_venta, id_Cliente)
+      INSERT INTO Detalle_Venta (Monto, tipo_pago, Cantidad, id_producto, fecha, id_Cliente)
       VALUES (?, ?, ?, ?, ?, ?)
   `;
-  const DVentaValues = [Monto, tipo_pago, Cantidad, id_producto, id_venta, id_Cliente];
+  const DVentaValues = [Monto, tipo_pago, Cantidad, id_producto, fecha, id_Cliente];
 
   // Ejecuta la consulta para insertar en la tabla "Venta"
   db.query(DVentaSql, DVentaValues, (err, casoResult) => {
@@ -329,49 +329,6 @@ router.post('/insertDventa', (req, res) => {
           // Devuelve un mensaje de éxito como respuesta
           res.status(200).json({ message: 'Detalle_Venta insertada exitosamente' });
       }
-  });
-});
-
-// Ruta para actualizar un registro existente en la tabla Detalle_Venta por ID
-router.put('/updateDVenta/:id_detalleventa', (req, res) => {
-  const  id_detalleventa = req.params.id_detalleventa;
-  const {} = req.body;
-
-  if (!Monto|| !tipo_pago || !Cantidad || !id_producto || !id_venta || !id_Cliente) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-  }
-
-  const sql = `
-    UPDATE Detalle_Venta
-    SET Monto = ?, tipo_pago = ?, Cantidad = ?, id_producto = ?, id_venta = ?, id_Cliente = ?
-    WHERE  id_detalleventa = ?
-  `;
-
-  const values = [Monto, tipo_pago, Cantidad, id_producto, id_venta, id_Cliente,id_detalleventa];
-
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al actualizar el registro en Detalle_Venta:', err);
-      res.status(500).json({ error: 'Error al actualizar el registro en Detalle_Venta' });
-    } else {
-      res.status(200).json({ message: 'Detalle_Venta actualizado exitosamente' });
-    }
-  });
-});
-
-// Ruta para eliminar un registro existente en la tabla Detalle_Venta por ID
-router.delete('/deleteDVenta/:id_detalleventa', (req, res) => {
-  const  id_detalleventa = req.params.id_detalleventa;
-
-  const sql = 'DELETE FROM Detalle_Venta WHERE  id_detalleventa  = ?';
-
-  db.query(sql, [id_detalleventa], (err, result) => {
-    if (err) {
-      console.error('Error al eliminar el registro en Detalle_Venta:', err);
-      res.status(500).json({ error: 'Error al eliminar el registro en Detalle_Venta' });
-    } else {
-      res.status(200).json({ message: 'Detalle_Venta eliminada exitosamente' });
-    }
   });
 });
 
