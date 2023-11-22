@@ -3,7 +3,10 @@ import { Button, Container, Card, Form, Row, Col, Modal, FloatingLabel } from 'r
 import { FaPlus } from 'react-icons/fa6';
 
 function VentaComponent() {
-  const [cliente, setClientes] = useState([]);
+  const [clientes, setClientes] = useState([]);
+  const [Cliente, setCliente] = useState('');
+  const [id_Cliente, setIDCliente] = useState('');
+
   const [productos, setProductos] = useState([]);
 
   const [fechaVenta, setFechaVenta] = useState('');
@@ -83,18 +86,18 @@ function VentaComponent() {
     }
   };
 
-  useEffect(() => {
-    // Cargar la lista de clientes y productos al montar el componente
-    fetch('http://localhost:5000/crud/readclientes')
-      .then((response) => response.json())
-      .then((data) => setClientes(data))
-      .catch((error) => console.error('Error al cargar clientes:', error));
-
-    fetch('http://localhost:5000/crud/readproducto')
-      .then((response) => response.json())
-      .then((data) => setProductos(data))
-      .catch((error) => console.error('Error al cargar productos:', error));
-  },[], []);
+useEffect(() => {
+  // Realiza una solicitud a tu ruta para obtener 
+  fetch('http://localhost:5000/crud/readclientes')
+    .then(response => response.json())
+    .then(data => {
+      // Actualiza el estado c
+      setClientes(data);
+    })
+    .catch(error => {
+      console.error('Error al obtener los clientes', error);
+    });
+}, []);
 
   return (
     <Container>
@@ -109,18 +112,22 @@ function VentaComponent() {
                   <Form.Control type="date" value={fechaVenta} onChange={handleFechaChange} />
                 </FloatingLabel>
               </Col>
-              <Col>
-                <FloatingLabel controlId="cliente" label="Cliente">
-                  <Form.Select value={clienteId} onChange={handleClienteChange}>
-                    <option value="">Seleccione un cliente</option>
-                    {cliente.map((cliente) => (
-                      <option key={cliente.id} value={cliente.id}>
-                        {cliente.nombre}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
+              <Col sm="12" md="6" lg="4">
+                  <FloatingLabel controlId="id_Cliente" label="Cliente">
+                    <Form.Select
+                      aria-label="Cliente"
+                      value={id_Cliente}
+                      onChange={(e) => setCliente(e.target.value)}
+                    >
+                      <option>Seleccione el cliente</option>
+                      {clientes.map((cliente) => (
+                        <option key={cliente.id_Cliente} value={cliente.id_Cliente}>
+                          {cliente.nombres}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                </Col>
             </Row>
 
             {/* Campos para el detalle de la venta */}
