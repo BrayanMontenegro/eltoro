@@ -12,7 +12,8 @@ function Header({ rol }) {
   };
     return (
         <div>
-         {rol === 'admin' && (<div>
+          {rol === 'admin' && (
+          <div>
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md">
           <Container>
@@ -29,48 +30,62 @@ function Header({ rol }) {
                   <Link to="/" className="link-unstyled">Inicio</Link>
                 </Nav.Link>
   
-                <Nav.Link>
-                  <Link to="/about" className="link-unstyled">Informacion</Link>
-                </Nav.Link>
-  
                 <NavDropdown title="Clientes" id="clientes">
                   <NavDropdown.Item>
-                    <Link to="/cliente" className="link-unstyled">Registrar Cliente</Link>
+                    <Link to="/cliente" className="link-unstyled">Nuevo Cliente</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="/clientelist" className="link-unstyled">Listar Clientes</Link>
+                    <Link to="/clientelist" className="link-unstyled">Gestión de Clientes</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Categorias" id="categorias">
+                  <NavDropdown.Item>
+                    <Link to="/categoria" className="link-unstyled">Nueva Categoria</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Gestión de Categorias</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
   
-                <NavDropdown title="Productos" id="docentes">
+                <NavDropdown title="Productos" id="productos">
                   <NavDropdown.Item>
-                    <Link to="/producto" className="link-unstyled">Registrar Producto</Link>
+                    <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
                   </NavDropdown.Item>
-
+                  <NavDropdown.Item>
+                    <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/catalogo" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="/productolist" className="link-unstyled">Lista Productos</Link>
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item>
-                    <Link to="/categorialist" className="link-unstyled">Galeria de Productos</Link>
-                  </NavDropdown.Item>
-
+                    <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
+                  </NavDropdown.Item>w
                 </NavDropdown>
 
                 <NavDropdown title="Venta" id="ventas">
                   <NavDropdown.Item>
-                    <Link to="/Venta" className="link-unstyled">Registrar venta</Link>
+                    <Link to="/Venta" className="link-unstyled">Nueva Venta</Link>
                   </NavDropdown.Item>
-                  
-                  <NavDropdown.Divider />
-
                   <NavDropdown.Item>
+                    <Link to="/ventalist" className="link-unstyled">Gestión de Ventas</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte1" className="link-unstyled">Reporte de Ventas</Link>
                     <Link to="/VentaList" className="link-unstyled">Lista ventas</Link>
                   </NavDropdown.Item>
                   
                 </NavDropdown>
+
+                <NavDropdown title="Empleados" id="Empleados">
+                  <NavDropdown.Item>
+                    <Link to="/empleado" className="link-unstyled">Gestión de Empleados</Link>
+                  </NavDropdown.Item>
+                  </NavDropdown>
   
               </Nav>
             </Navbar.Collapse>
@@ -94,45 +109,73 @@ function Header({ rol }) {
           <Offcanvas.Body>
             <Nav className="flex-column">
   
-              <Nav.Link>
-                <Link to="/" className="link-unstyled">Inicio</Link>
-              </Nav.Link>
+            <Nav.Link>
+                  <Link to="/" className="link-unstyled">Inicio</Link>
+                </Nav.Link>
   
-              <Nav.Link>
-                <Link to="/about" className="link-unstyled">About</Link>
-              </Nav.Link>
+                <NavDropdown title="Clientes" id="clientes">
+                  <NavDropdown.Item>
+                    <Link to="/cliente" className="link-unstyled">Nuevo Cliente</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/clientelist" className="link-unstyled">Gestión de Clientes</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Categorias" id="categorias">
+                  <NavDropdown.Item>
+                    <Link to="/categoria" className="link-unstyled">Nueva Categoria</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Gestión de Categorias</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
   
-              <NavDropdown title="Clientes" id="clientes">
-                <NavDropdown.Item>
-                  <Link to="/customer" className="link-unstyled">Registrar Cliente</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/actualizar-cliente" className="link-unstyled">Compra en Línea</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-  
-              <NavDropdown title="Compra en Línea" id="compra">
-                <NavDropdown.Item>
-                  <Link to="/teacher" className="link-unstyled">Realizar Compra en Línea</Link>
-                </NavDropdown.Item>
-  
-                <NavDropdown.Item>
-                  <Link to="/teacherList" className="link-unstyled">Listar Docentes</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link>
-                <Link to="/Gestión alquiler" className="link-unstyled">Alquiler</Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="/Informacion" className="link-unstyled">Información sobre servicios de mantenimiento</Link>
-              </Nav.Link>
+                <NavDropdown title="Productos" id="productos">
+                  <NavDropdown.Item>
+                    <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
+                  </NavDropdown.Item>w
+                </NavDropdown>
+
+                <NavDropdown title="Venta" id="ventas">
+                  <NavDropdown.Item>
+                    <Link to="/Venta" className="link-unstyled">Nueva Venta</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/ventalist" className="link-unstyled">Gestión de Ventas</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte1" className="link-unstyled">Reporte de Ventas</Link>
+                  </NavDropdown.Item>
+                  
+                </NavDropdown>
+
+                <NavDropdown title="Empleados" id="Empleados">
+                  <NavDropdown.Item>
+                    <Link to="/empleado" className="link-unstyled">Gestión de Empleados</Link>
+                  </NavDropdown.Item>
+                  </NavDropdown>
   
             </Nav>
           </Offcanvas.Body>
         </Offcanvas>
       </div> )}
-  
-         {rol === 'vendedor' && (<div>
+
+      {rol === 'Vendedor' && (
+          <div>
         {/* Navbar principal */}
         <Navbar className="navbar-color" variant="dark" expand="md">
           <Container>
@@ -149,17 +192,54 @@ function Header({ rol }) {
                   <Link to="/" className="link-unstyled">Inicio</Link>
                 </Nav.Link>
   
-  
                 <NavDropdown title="Clientes" id="clientes">
                   <NavDropdown.Item>
-                    <Link to="/customer" className="link-unstyled">Compra en Línea</Link>
+                    <Link to="/cliente" className="link-unstyled">Nuevo Cliente</Link>
                   </NavDropdown.Item>
-  
+                  <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="/clientelist" className="link-unstyled">Listar Clientes</Link>
+                    <Link to="/clientelist" className="link-unstyled">Gestión de Clientes</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Categorias" id="categorias">
+                  <NavDropdown.Item>
+                    <Link to="/categoria" className="link-unstyled">Nueva Categoria</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Gestión de Categorias</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
   
+                <NavDropdown title="Productos" id="productos">
+                  <NavDropdown.Item>
+                    <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
+                  </NavDropdown.Item>w
+                </NavDropdown>
+
+                <NavDropdown title="Venta" id="ventas">
+                  <NavDropdown.Item>
+                    <Link to="/Venta" className="link-unstyled">Nueva Venta</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/ventalist" className="link-unstyled">Gestión de Ventas</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte" className="link-unstyled">Reporte de Ventas</Link>
+                  </NavDropdown.Item>       
+                </NavDropdown>
   
               </Nav>
             </Navbar.Collapse>
@@ -183,45 +263,66 @@ function Header({ rol }) {
           <Offcanvas.Body>
             <Nav className="flex-column">
   
-              <Nav.Link>
-                <Link to="/" className="link-unstyled">Inicio</Link>
-              </Nav.Link>
+            <Nav.Link>
+                  <Link to="/" className="link-unstyled">Inicio</Link>
+                </Nav.Link>
   
-              <Nav.Link>
-                <Link to="/about" className="link-unstyled">About</Link>
-              </Nav.Link>
+                <NavDropdown title="Clientes" id="clientes">
+                  <NavDropdown.Item>
+                    <Link to="/cliente" className="link-unstyled">Nuevo Cliente</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/clientelist" className="link-unstyled">Gestión de Clientes</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Categorias" id="categorias">
+                  <NavDropdown.Item>
+                    <Link to="/categoria" className="link-unstyled">Nueva Categoria</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Gestión de Categorias</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
   
-              <NavDropdown title="Clientes" id="clientes">
-                <NavDropdown.Item>
-                  <Link to="/customer" className="link-unstyled">Registrar Cliente</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/actualizar-cliente" className="link-unstyled">Compra en Línea</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-  
-              <NavDropdown title="Compra en Línea" id="compra">
-                <NavDropdown.Item>
-                  <Link to="/teacher" className="link-unstyled">Realizar Compra en Línea</Link>
-                </NavDropdown.Item>
-  
-                <NavDropdown.Item>
-                  <Link to="/teacherList" className="link-unstyled">Listar Docentes</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link>
-                <Link to="/Gestión alquiler" className="link-unstyled">Alquiler</Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="/Informacion" className="link-unstyled">Información sobre servicios de mantenimiento</Link>
-              </Nav.Link>
+                <NavDropdown title="Productos" id="productos">
+                  <NavDropdown.Item>
+                    <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
+                  </NavDropdown.Item>w
+                </NavDropdown>
+
+                <NavDropdown title="Venta" id="ventas">
+                  <NavDropdown.Item>
+                    <Link to="/Venta" className="link-unstyled">Nueva Venta</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/ventalist" className="link-unstyled">Gestión de Ventas</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item>
+                    <Link to="/reporte" className="link-unstyled">Reporte de Ventas</Link>
+                  </NavDropdown.Item>
+                  
+                </NavDropdown>
   
             </Nav>
           </Offcanvas.Body>
         </Offcanvas>
       </div> )}
-       </div>
-     );
+        </div>
+      );
   }
   
   export default Header;
