@@ -122,5 +122,55 @@ module.exports = (db) => {
     });
   });
 
+  router.post('/createEmpleado', (req, res) => {
+    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
+    const {
+        nombre_Usuario,
+        contrasena,
+        rol,
+        Correo,
+        Telefono,
+    } = req.body;
+
+    // Verifica si se proporcionaron los datos necesarios
+    if (!nombre_Usuario || !contrasena || !rol || !Correo || !Telefono) {
+        return res.status(400).json({ error: 'Los campos "nombre_Usuario", "contrasena", "rol", "Correo" y "Telefono" son obligatorios' });
+    }
+
+    // Realiza la consulta SQL para insertar un nuevo registro en la tabla "Usuario"
+    const usuarioSql = `
+        INSERT INTO usuario (nombre_Usuario, contrasena, rol)
+        VALUES (?, ?, ?)
+    `;
+    const usuarioValues = [nombre_Usuario, contrasena, rol];
+
+    // Ejecuta la consulta para insertar en la tabla "Persona"
+    db.query(usuarioSql, usuarioValues, (err, usuarioResult) => {
+        if (err) {
+            console.error('Error al insertar registro de Usuario:', err);
+            res.status(500).json({ error: 'Error al insertar registro de Usuario' });
+        } else {
+            const id_Usuario = usuarioResult.insertId; // Obtenemos el IDUsuario recién insertado
+
+            // Realiza la consulta SQL para insertar un nuevo registro de Empleado
+            const empleadoSql = `INSERT INTO empleado (id_Usuario, Correo, Telefono)
+                VALUES (?, ?, ?)
+            `;
+            const empleadoValues = [id_Usuario, Correo, Telefono];
+
+            // Ejecuta la consulta para insertar en la tabla "Empleado"
+            db.query(empleadoSql, empleadoValues, (err, empleadoResult) => {
+                if (err) {
+                    console.error('Error al insertar registro de Empleado:', err);
+                    res.status(500).json({ error: 'Error al insertar registro de Empleado' });
+                } else {
+                    // Devuelve el ID del nuevo registro de Empleado como respuesta
+                    res.status(201).json({ IDEmpleado: empleadoResult.insertId });
+                }
+            });
+        }
+    });
+});
+
     return router;
 };

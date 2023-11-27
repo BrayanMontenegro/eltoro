@@ -15,7 +15,7 @@ function Header({ rol }) {
           {rol === 'admin' && (
           <div>
         {/* Navbar principal */}
-        <Navbar className="navbar-color" variant="dark" expand="md">
+        <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
             <Navbar.Brand href="#home">Sala de Videojuegos El Toro</Navbar.Brand>
             <Navbar.Toggle
@@ -177,7 +177,7 @@ function Header({ rol }) {
       {rol === 'Vendedor' && (
           <div>
         {/* Navbar principal */}
-        <Navbar className="navbar-color" variant="dark" expand="md">
+        <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
           <Container>
             <Navbar.Brand href="#home">Sala de Videojuegos El Toro</Navbar.Brand>
             <Navbar.Toggle
