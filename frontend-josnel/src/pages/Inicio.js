@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import '../styles/App.css';
 import { FaUser } from "react-icons/fa6";
-import { BsCartFill } from "react-icons/bs";
 
 function Inicio() {
 
@@ -58,7 +57,10 @@ function Inicio() {
             </Button>
             </Container>
         </Navbar>
+
+        <Footer/>
             </div>
+            
     );
 }
 

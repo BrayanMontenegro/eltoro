@@ -15,6 +15,7 @@ import Venta from './pages/NuevaVenta';
 import ListVenta from './pages/ListadoVenta';
 import ReporteP from './pages/ReporteProducto';
 import ReporteV from './pages/ReporteVenta';
+import SinAcceso from './pages/SinAcceso';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
       <Route path="/ventalist" element={userRol ? <ListVenta rol={userRol} /> : <Navigate to="/sinacceso" />} />
       <Route path="/reporte1" element={userRol ? <ReporteV rol={userRol} /> : <Navigate to="/sinacceso" />} />
       <Route path="/empleado" element={userRol ? <ListEmpleado rol={userRol} /> : <Navigate to="/sinacceso" />} />
+      <Route path="/sinacceso" element={<SinAcceso />} />
       </Routes>
     </Router>
   );

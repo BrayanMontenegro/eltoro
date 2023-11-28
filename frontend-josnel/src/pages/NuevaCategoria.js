@@ -57,7 +57,7 @@ function Categoria({rol}) {
         <Header rol={rol} />
         
         <Container responsive>
-            <Card className="mt-3">
+            <Card className="margen-contenedor">
             <Card.Body>
                 <Card.Title>Nueva Categoria</Card.Title>
                 <Form className="mt-3" onSubmit={handleSubmit}>

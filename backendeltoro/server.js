@@ -21,7 +21,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'dayana2005',
+    password: 'rb0203',
     database: 'eltoro'
 });
 

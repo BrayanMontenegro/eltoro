@@ -10,3 +10,53 @@
 .center-button {
   text-align: center;
 }
+
+.footer {
+  background-color: #25008ad8;
+  color: #fff;
+  padding: 2px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+
+.social-icon {
+  text-align: center;
+  font-size: 24px;
+  margin: 2px 0;
+}
+
+.social-icon a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.social-icon a:hover {
+  color: #007bff;
+}
+
+.Seleccion {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 6px 10px;
+  transition: all 0.2s;
+}
+
+.margen-contenedor {
+  margin-top: 70px;
+}
+
+.sin-acceso-container {
+  height: 100vh; /* 100% de la altura de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sin-acceso-card {
+  width: 300px;
+  text-align: center;
+  padding: 20px;
+}

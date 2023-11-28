@@ -171,7 +171,7 @@ function ListProducto({rol}) {
         <div>
         <Header rol={rol} />
 
-        <Card className="margen" responsive>
+        <Card className="margen-contenedor" responsive>
             <Card.Body>
             <Card.Title className="titulo-2">Productos</Card.Title>
             

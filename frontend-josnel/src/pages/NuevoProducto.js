@@ -158,7 +158,7 @@ const handleSubmitCategoria = async (e) => {
         <Header rol={rol} />
         
         <Container responsive>
-            <Card className="mt-5">
+            <Card className="margen-contenedor">
             <Card.Body>
                 <Card.Title className="mt-3">Nuevo Producto</Card.Title>
                 <div className='form-1'>

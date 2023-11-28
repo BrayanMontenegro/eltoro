@@ -487,6 +487,21 @@ router.get('/readventa', (req, res) => {
   });
 });
 
+router.get('/readVenta', (req, res) => {
+  const sql = `
+  SELECT * from detalle_venta
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al obtener ventas:', err);
+      res.status(500).json({ error: 'Error al obtener ventas' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
 router.post('/createventa', (req, res) => {
   // Extraer datos de la solicitud
   const { id_Empleado, id_Cliente, detalle } = req.body;
@@ -502,8 +517,8 @@ router.post('/createventa', (req, res) => {
     const id_Venta = result.insertId; // Obtener el ID de la venta insertada
 
     // Iterar sobre el detalle de la venta y realizar inserciones en DetalleVenta
-    const sqlDetalle = 'INSERT INTO detalle_venta (id_Venta, Cantidad, id_Producto) VALUES ?';
-    const values = detalle.map((item) => [id_Venta, item.Cantidad, item.id_Producto]);
+    const sqlDetalle = 'INSERT INTO detalle_venta (Cantidad, id_Producto, id_Venta) VALUES ?';
+    const values = detalle.map((item) => [ item.Cantidad, item.id_Producto, id_Venta]);
     db.query(sqlDetalle, [values], (err, result) => {
       if (err) {
         console.error('Error al insertar detalle de venta:', err);

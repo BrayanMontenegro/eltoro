@@ -217,7 +217,7 @@ function Venta({ rol }) {
                         <Form.Control
                         type="text"
                         placeholder="Seleccionar Cliente"
-                        name="cliente"
+                        name="id_Cliente"
                         value={selectedCliente ? selectedCliente.nombres : ''}
                         readOnly
                         />
@@ -234,7 +234,7 @@ function Venta({ rol }) {
                         <Form.Control
                         type="text"
                         placeholder="Seleccionar Empleado"
-                        name="empleado"
+                        name="id_Empleado"
                         value={selectedEmpleado ? selectedEmpleado.nombres : ''}
                         readOnly
                         />
@@ -251,7 +251,7 @@ function Venta({ rol }) {
                         <Form.Control
                         type="text"
                         placeholder="Seleccionar Producto"
-                        name="producto"
+                        name="id_Producto"
                         value={selectedProducto ? selectedProducto.nombre : ''}
                         readOnly
                         />
@@ -267,6 +267,7 @@ function Venta({ rol }) {
                     <FloatingLabel controlId="Cantidad" label="Cantidad">
                         <Form.Control 
                         type="number" 
+                        min={1}
                         placeholder="Cantidad de Producto"
                         value={Cantidad}
                         onChange={(e) => setCantidad(e.target.value)} 

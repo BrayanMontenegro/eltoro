@@ -65,9 +65,6 @@ function Header({ rol }) {
                   <NavDropdown.Item>
                     <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="/catalogo" className="link-unstyled">Productos</Link>
-                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
@@ -152,9 +149,6 @@ function Header({ rol }) {
                   <NavDropdown.Item>
                     <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
-                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
@@ -235,9 +229,6 @@ function Header({ rol }) {
                   <NavDropdown.Item>
                     <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
-                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
@@ -313,9 +304,6 @@ function Header({ rol }) {
                   </NavDropdown.Item>
                   <NavDropdown.Item>
                     <Link to="/productolist" className="link-unstyled">Gestión de Productos</Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="/categorialist" className="link-unstyled">Productos</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>

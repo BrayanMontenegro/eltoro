@@ -1,7 +1,6 @@
 CREATE DATABASE eltoro;
 USE eltoro;
 
-
 CREATE TABLE Usuario (
   id_Usuario Int PRIMARY KEY AUTO_INCREMENT,
   nombre_Usuario Varchar(30) NOT NULL,
@@ -24,12 +23,12 @@ nom_categoria VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE producto (
-  id_producto INT AUTO_INCREMENT PRIMARY KEY,
+  id_Producto INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(15) not null,
   precio_compra DECIMAL(8,2) not null,
   precio_venta DECIMAL(8,2) not null,
   descripcion VARCHAR(30) not null,
-  cantidad INT not null,
+  stock INT not null,
   imagen LONGTEXT,
   id_Categoria INT NOT NULL,
   FOREIGN KEY (id_Categoria) REFERENCES categoria (id_Categoria)
@@ -47,7 +46,7 @@ correo varchar(40) NOT NULL
 
 
 CREATE TABLE Venta (
-  id_venta INT AUTO_INCREMENT PRIMARY KEY,
+  id_Venta INT AUTO_INCREMENT PRIMARY KEY,
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   id_Empleado INT NOT NULL,
   id_Cliente INT NOT NULL,
@@ -57,12 +56,10 @@ FOREIGN KEY (id_Cliente) REFERENCES cliente (id_Cliente)
 
 
 CREATE TABLE Detalle_Venta (
-  id_detalleventa INT AUTO_INCREMENT PRIMARY KEY,
+  id_Detalle INT AUTO_INCREMENT PRIMARY KEY,
   Cantidad INT not null,
   id_Producto INT not null,
-  id_Cliente INT not null,
   id_Venta INT not null,
  FOREIGN KEY (id_Producto) REFERENCES producto (id_Producto),
- FOREIGN KEY (id_Cliente) REFERENCES cliente (id_Cliente),
  FOREIGN KEY (id_Venta) REFERENCES venta (id_Venta)
 );

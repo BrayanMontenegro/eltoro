@@ -87,7 +87,7 @@ function Cliente({rol}) {
         <Header rol={rol}/>
         
         <Container responsive>
-            <Card className="mt-5">
+            <Card className="margen-contenedor">
             <Card.Body>
                 <Card.Title>Nuevo Cliente</Card.Title>
                 <Form className="mt-5" onSubmit={handleSubmit}>
