@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { FaRightFromBracket } from 'react-icons/fa6';
 
 
 function Header({ rol }) {
@@ -10,6 +11,13 @@ function Header({ rol }) {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+      // Función para cerrar sesión
+      const cerrarSesion = () => {
+        // Eliminar el rol del localStorage al cerrar sesión
+        localStorage.removeItem('userRol');
+      };
+
     return (
         <div>
           {rol === 'admin' && (
@@ -63,7 +71,7 @@ function Header({ rol }) {
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
-                  </NavDropdown.Item>w
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Venta" id="ventas">
@@ -86,6 +94,10 @@ function Header({ rol }) {
                     <Link to="/empleado" className="link-unstyled">Gestión de Empleados</Link>
                   </NavDropdown.Item>
                   </NavDropdown>
+
+                  <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled"><FaRightFromBracket /> Cerrar Sesión</Link>
+                </Nav.Link>
   
               </Nav>
             </Navbar.Collapse>
@@ -146,7 +158,7 @@ function Header({ rol }) {
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
-                  </NavDropdown.Item>w
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Venta" id="ventas">
@@ -168,6 +180,10 @@ function Header({ rol }) {
                     <Link to="/empleado" className="link-unstyled">Gestión de Empleados</Link>
                   </NavDropdown.Item>
                   </NavDropdown>
+
+                  <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled"><FaRightFromBracket /> Cerrar Sesión</Link>
+                </Nav.Link>
   
             </Nav>
           </Offcanvas.Body>
@@ -240,6 +256,10 @@ function Header({ rol }) {
                     <Link to="/reporte" className="link-unstyled">Reporte de Ventas</Link>
                   </NavDropdown.Item>       
                 </NavDropdown>
+
+                <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled"><FaRightFromBracket /> Cerrar Sesión</Link>
+                </Nav.Link>
   
               </Nav>
             </Navbar.Collapse>
@@ -316,6 +336,10 @@ function Header({ rol }) {
                   </NavDropdown.Item>
                   
                 </NavDropdown>
+
+                <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled"><FaRightFromBracket /> Cerrar Sesión</Link>
+                </Nav.Link>
   
             </Nav>
           </Offcanvas.Body>
