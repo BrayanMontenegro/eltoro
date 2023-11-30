@@ -232,7 +232,7 @@ function Header({ rol }) {
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
-                  </NavDropdown.Item>w
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Venta" id="ventas">
@@ -244,7 +244,7 @@ function Header({ rol }) {
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="/reporte" className="link-unstyled">Reporte de Ventas</Link>
+                    <Link to="/reporte1" className="link-unstyled">Reporte de Ventas</Link>
                   </NavDropdown.Item>       
                 </NavDropdown>
 
@@ -308,7 +308,7 @@ function Header({ rol }) {
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <Link to="/reporte" className="link-unstyled">Reporte de Productos</Link>
-                  </NavDropdown.Item>w
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Venta" id="ventas">
@@ -320,7 +320,7 @@ function Header({ rol }) {
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="/reporte" className="link-unstyled">Reporte de Ventas</Link>
+                    <Link to="/reporte1" className="link-unstyled">Reporte de Ventas</Link>
                   </NavDropdown.Item>
                   
                 </NavDropdown>

@@ -3,7 +3,7 @@ import { Table, Card } from 'react-bootstrap';
 import Header from '../components/Header';
 
 function ListVenta({rol}) {
-    const [detalle_ventas, setVentas] = useState([]);
+    const [ventas, setVentas] = useState([]);
 
     // Realiza una solicitud GET al servidor para obtener las ventas
     useEffect(() => {
@@ -25,20 +25,28 @@ function ListVenta({rol}) {
                 <thead>
                 <tr>
                     <th>N°</th>
-                    <th>Nombre de producto</th>
+                    <th>Empleado</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Fecha</th>
+                    <th>Tipo de pago</th>
+                    <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
-                {detalle_ventas.map((detalle_venta) => (
-                    <tr key={detalle_venta.id_Detalle}>
-                    <td>{detalle_venta.id_Detalle}</td>
-                    <td>{detalle_venta.nombre}</td>
-                    <td>C$ {detalle_venta.precio_venta}</td>
-                    <td>{detalle_venta.Cantidad} Unidades</td>
-                    <td>{detalle_venta.fecha}</td>
+                {ventas.map((venta) => (
+                    <tr key={venta.id_Detalle}>
+                    <td>{venta.id_Detalle}</td>
+                    <td>{venta.nombre_Usuario}</td>
+                    <td>{venta.fecha}</td>
+                    <td>{venta.nombres}</td>
+                    <td>{venta.nombre}</td>
+                    <td>C$ {venta.precio_venta}</td>
+                    <td>{venta.Cantidad} Unidades</td>
+                    <td>{venta.tipo_pago}</td>
+                    <td>C$ {venta.Cantidad * venta.precio_venta}</td>
                     </tr>
                 ))}
                 </tbody>

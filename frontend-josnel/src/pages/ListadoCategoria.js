@@ -125,7 +125,7 @@ function ListCategoria({rol}) {
             <Table striped bordered hover className='table'>
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>N°</th>
                     <th>Nombre de Categoria</th>
                 </tr>
                 </thead>

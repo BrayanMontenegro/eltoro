@@ -22,7 +22,7 @@ function CreateEmpleado() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-    if (!nombre_Usuario || !contrasena || !rol || !Correo || !Telefono) {
+    if (!nombre_Usuario || !contrasena || !Correo || !Telefono) {
         alert ('Debe completar los campos');
         return;
     }
@@ -31,7 +31,7 @@ function CreateEmpleado() {
         const formData = {
         nombre_Usuario,
         contrasena,
-        rol,
+        rol: 'Vendedor',
         Correo,
         Telefono,
         };
@@ -118,18 +118,6 @@ function CreateEmpleado() {
                             onChange={handleTelefonoChange}
                         />
                         </FloatingLabel>
-                    </Col>
-                    <Col sm="12" md="12" lg="12">
-                    <FloatingLabel controlId="rol" label="Rol">
-                        <Form.Select 
-                        aria-label="Rol"
-                        value={rol}
-                        onChange={(e) => setRol(e.target.value)}
-                        >
-                        <option>Seleccione el rol</option>
-                        <option value="Vendedor">Vendedor</option>
-                        </Form.Select>
-                    </FloatingLabel>
                     </Col>
                     </Row>
 

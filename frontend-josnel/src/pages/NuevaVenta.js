@@ -13,6 +13,7 @@ function Venta({ rol }) {
     });
 
     const [Cantidad, setCantidad] = useState('');
+    const [tipo_pago, setTipoPago] = useState('');
 
     const [empleados, setEmpleados] = useState([]);
     const [clientes, setClientes] = useState([]);
@@ -36,6 +37,7 @@ function Venta({ rol }) {
     };
 
     const AgregarDetalleProducto = () => {
+
         if (selectedProducto && Cantidad) {
         const nuevoDetalle = {
             id_Producto: selectedProducto.id_Producto,
@@ -102,7 +104,7 @@ function Venta({ rol }) {
 
     //Manejo de carga y selección de Empleados --------------------------------------
     const loadEmpleados = () => {
-        fetch('http://localhost:5000/crud/readempleado')
+        fetch('http://localhost:5000/crud/readEmpleado')
         .then((response) => response.json())
         .then((data) => setEmpleados(data))
         .catch((error) => console.error('Error al obtener los empleados:', error));
@@ -169,7 +171,8 @@ function Venta({ rol }) {
         const data = {
             id_Cliente: selectedCliente.id_Cliente,
             id_Empleado: selectedEmpleado.id_Empleado,
-            detalle: detalleVenta,
+            tipo_pago: tipo_pago,
+            detalle: detalleVenta
         };
 
         fetch('http://localhost:5000/crud/createventa', {
@@ -185,6 +188,7 @@ function Venta({ rol }) {
                 console.log('Venta registrada con éxito');
                 alert('¡Venta registrada con éxito!');
                 setDetalleVenta([]);
+                setTipoPago('');
                 // Limpia otros estados según sea necesario
             } else {
                 // Aquí maneja el caso de error en la petición
@@ -222,7 +226,7 @@ function Venta({ rol }) {
                         readOnly
                         />
                         <div className="button-container">
-                        <Button className="search-button" variant="outline-primary" onClick={openClienteModal}>
+                        <Button className="botones" variant="outline-primary" onClick={openClienteModal}>
                             <FaSearch />
                         </Button>
                         </div>
@@ -235,11 +239,11 @@ function Venta({ rol }) {
                         type="text"
                         placeholder="Seleccionar Empleado"
                         name="id_Empleado"
-                        value={selectedEmpleado ? selectedEmpleado.nombres : ''}
+                        value={selectedEmpleado ? selectedEmpleado.nombre_Usuario : ''}
                         readOnly
                         />
                         <div className="button-container">
-                        <Button className="search-button" variant="outline-primary" onClick={openEmpleadoModal}>
+                        <Button className="botones" variant="outline-primary" onClick={openEmpleadoModal}>
                             <FaSearch />
                         </Button>
                         </div>
@@ -256,7 +260,7 @@ function Venta({ rol }) {
                         readOnly
                         />
                         <div className="button-container">
-                        <Button className="search-button" variant="outline-primary" onClick={openProductoModal}>
+                        <Button className="botones" variant="outline-primary" onClick={openProductoModal}>
                             <FaSearch />
                         </Button>
                         </div>
@@ -281,6 +285,20 @@ function Venta({ rol }) {
                     </Button>
                     </Col>
 
+                    <Col sm="12" md="6" lg="4">
+                    <FloatingLabel controlId="tipo_pago" label="Tipo de pago">
+                        <Form.Select 
+                        aria-label="Tipo de pago"
+                        value={tipo_pago}
+                        onChange={(e) => setTipoPago(e.target.value)}
+                        >
+                        <option>Seleccione el tipo de pago</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transacción">Transacción</option>
+                        </Form.Select>
+                    </FloatingLabel>
+                    </Col>
+
                     <Col sm="12" md="1" lg="12">
                     <Card className="global-margin-top">
                         <Card.Body>
@@ -301,9 +319,9 @@ function Venta({ rol }) {
                             <tr key={detalle.id_Producto}>
                                 <td>{detalle.id_Producto}</td>
                                 <td>{detalle.nombre}</td>
-                                <td>{detalle.precio_venta}</td>
-                                <td>{detalle.Cantidad}</td>
-                                <td>{detalle.Cantidad * detalle.precio_venta}</td>
+                                <td>C$ {detalle.precio_venta}</td>
+                                <td>{detalle.Cantidad} Unidades</td>
+                                <td>C$ {detalle.Cantidad * detalle.precio_venta}</td>
                                 <td className="align-button">
                                 <Button 
                                     size="sm"
@@ -374,7 +392,7 @@ function Venta({ rol }) {
             <Modal.Body>
             {empleados.map((empleado) => (
                 <div className="Seleccion" key={empleado.id_Empleado} onClick={() => selectEmpleado(empleado)}>
-                {empleado.nombres}
+                {empleado.nombre_Usuario}
                 </div>
             ))}
             </Modal.Body>

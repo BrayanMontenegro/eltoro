@@ -28,96 +28,128 @@ module.exports = (db) => {
     });
   });
 
-  router.get('/readCategoria', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM categoria';
-
-    // Ejecutar la consulta
-    db.query(sql, (err, result) => {
+  router.get('/readcategoria', (req, res) => {
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'MostrarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(`CALL ${storedProcedure}`, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros de la tabla categoria' });
+        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
       } else {
         // Devolver los registros en formato JSON como respuesta
+        res.status(200).json(result[0]); // Los resultados están en el primer elemento del array result
+      }
+    });
+  });
+
+  router.post('/createcategoria', (req, res) => {
+    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
+    const { nom_categoria } = req.body;
+  
+    // Verifica si se proporcionaron los datos necesarios
+    if (!nom_categoria) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+  
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'CrearCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(
+      `CALL ${storedProcedure}(?)`,
+      [nom_categoria],
+      (err, result) => {
+        if (err) {
+          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+        } else {
+          // Devuelve un mensaje como respuesta
+          res.status(200).json({ message: 'Registro agregado exitosamente' });
+        }
+      }
+    );
+  });
+
+  router.put('/updatecategoria/:id_Categoria', (req, res) => {
+    // Obtén el ID del registro a actualizar desde los parámetros de la URL
+    const id_Categoria = req.params.id_Categoria;
+  
+    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
+    const { nom_categoria } = req.body;
+  
+    // Verifica si se proporcionaron los datos necesarios
+    if (!nom_categoria) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+  
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'ModificarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(
+      `CALL ${storedProcedure}(?, ?, ?)`,
+      [id_Categoria, nom_categoria],
+      (err, result) => {
+        if (err) {
+          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+        } else {
+          // Devuelve un mensaje de éxito
+          res.status(200).json({ message: 'Registro actualizado exitosamente' });
+        }
+      }
+    );
+  });
+
+  router.delete('/deleteCategoria/: id_Categoria', (req, res) => {
+    // Obtén el ID del registro a eliminar desde los parámetros de la URL
+    const id_Categoria = req.params.id_Categoria;
+  
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'EliminarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(`CALL ${storedProcedure}(?)`, [id_Categoria], (err, result) => {
+      if (err) {
+        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+      } else {
+        // Devuelve un mensaje de éxito
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
+      }
+    });
+  });
+
+  router.get('/readEmpleado', (req, res) => {
+    const sql = `
+    select id_Empleado, usuario.nombre_Usuario from empleado inner join usuario on empleado.id_Usuario = usuario.id_Usuario;
+    `;
+  
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error('Error al obtener empleado:', err);
+        res.status(500).json({ error: 'Error al obtener empleado' });
+      } else {
         res.status(200).json(result);
       }
     });
   });
 
-  router.post('/createCategoria', (req, res) => {
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nom_categoria } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!nom_categoria) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO categoria (nom_categoria) VALUES (?)`;
-    const values = [nom_categoria];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Error al insertar un registro en la tabla categoria:', err);
-        res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
-      } else {
-        // Devuelve un mensaje como respuesta
-        res.status(200).json({ message: 'Registro agregado exitosamente' });
-      }
-    });
-  });
-
-  router.put('/updateCategoria/:id_Categoria', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const id_Categoria = req.params.id_Categoria;
-
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nom_categoria } = req.body;
-
-    // Verifica si se proporcionaron los datos necesarios
-    if (!nom_categoria) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-
-    // Realiza la consulta SQL para actualizar el registro por ID
+  router.get('/readempleado', (req, res) => {
     const sql = `
-      UPDATE categoria
-      SET nom_categoria = ?
-      WHERE id_Categoria = ?
+    select usuario.nombre_Usuario, usuario.rol, telefono, correo
+    from empleado inner join usuario
+    on empleado.id_Usuario = usuario.id_Usuario;
     `;
-
-    const values = [nom_categoria, id_Categoria];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
+  
+    db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro de la tabla categoria:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro de la tabla categoria' });
+        console.error('Error al obtener empleado:', err);
+        res.status(500).json({ error: 'Error al obtener empleado' });
       } else {
-        // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado exitosamente' });
-      }
-    });
-  });
-
-  router.delete('/deleteCategoria/:id_Categoria', (req, res) => {
-    // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const id_Categoria = req.params.id_Categoria;
-
-    // Realiza la consulta SQL para eliminar el registro por ID
-    const sql = 'DELETE FROM categoria WHERE id_Categoria = ?';
-
-    // Ejecuta la consulta
-    db.query(sql, [id_Categoria], (err, result) => {
-      if (err) {
-        console.error('Error al eliminar un registro de la tabla categoria:', err);
-        res.status(500).json({ error: 'Error al eliminar un registro de la tabla categoria' });
-      } else {
-        // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado exitosamente' });
+        res.status(200).json(result);
       }
     });
   });
@@ -266,100 +298,6 @@ router.delete('/deletecliente/:id_Cliente', (req, res) => {
   });
 });
 
-router.get('/readcategoria', (req, res) => {
-  // Utiliza la instancia de la base de datos pasada como parámetro
-  // Realizar una consulta SQL para seleccionar todos los registros
-  const sql = 'SELECT * FROM categoria';
-
-  // Ejecutar la consulta
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error al leer registros:', err);
-      res.status(500).json({ error: 'Error al leer registros de la tabla categoria' });
-    } else {
-      // Devolver los registros en formato JSON como respuesta
-      res.status(200).json(result);
-    }
-  });
-});
-
-router.post('/createcategoria', (req, res) => {
-  // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-  const {nom_categoria } = req.body;
-
-  // Verifica si se proporcionaron los datos necesarios
-  if (!nom_categoria) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-  }
-
-  // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-  const sql = `INSERT INTO categoria (nom_categoria) VALUES (?)`;
-  const values = [nom_categoria];
-
-  // Ejecuta la consulta
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al insertar un registro en la tabla categoria:', err);
-      res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
-    } else {
-      // Devuelve un mensaje como respuesta
-      res.status(200).json({ message: 'Registro agregado exitosamente' });
-    }
-  });
-});
-
-router.put('/updatecategoria/:id_Categoria', (req, res) => {
-  // Obtén el ID del registro a actualizar desde los parámetros de la URL
-  const id_Categoria = req.params.id_Categoria;
-
-  // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-  const { nom_Categoria } = req.body;
-
-  // Verifica si se proporcionaron los datos necesarios
-  if (!nom_Categoria) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-  }
-
-  // Realiza la consulta SQL para actualizar el registro por ID
-  const sql = `
-    UPDATE categoria
-    SET nom_Categoria = ?
-    WHERE id_Categoria = ?
-  `;
-
-  const values = [nom_Categoria, id_Categoria];
-
-  // Ejecuta la consulta
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al actualizar el registro de la tabla categoria:', err);
-      res.status(500).json({ error: 'Error al actualizar el registro de la tabla categoria' });
-    } else {
-      // Devuelve un mensaje de éxito
-      res.status(200).json({ message: 'Registro actualizado exitosamente' });
-    }
-  });
-});
-
-router.delete('/deletecategoria/:id_Categoria', (req, res) => {
-  // Obtén el ID del registro a eliminar desde los parámetros de la URL
-  const id_Categoria = req.params.id_Categoria;
-
-  // Realiza la consulta SQL para eliminar el registro por ID
-  const sql = 'DELETE FROM categoria WHERE id_Categoria = ?';
-
-  // Ejecuta la consulta
-  db.query(sql, [id_Categoria], (err, result) => {
-    if (err) {
-      console.error('Error al eliminar un registro de la tabla categoria:', err);
-      res.status(500).json({ error: 'Error al eliminar un registro de la tabla ' });
-    } else {
-      // Devuelve un mensaje de éxito
-      res.status(200).json({ message: 'Registro eliminado exitosamente' });
-    }
-  });
-});
-
 router.get('/readproducto', (req, res) => {
   // Utiliza la instancia de la base de datos pasada como parámetro
   // Realizar una consulta SQL para seleccionar todos los registros
@@ -454,42 +392,20 @@ router.delete('/deleteproducto/:id_Producto', (req, res) => {
   });
 });
 
-router.get('/readempleado', (req, res) => {
-  const sql = `
-  select * from empleado
-  `;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error al obtener empleado:', err);
-      res.status(500).json({ error: 'Error al obtener empleado' });
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
-
 router.get('/readventa', (req, res) => {
   const sql = `
-  SELECT id_Detalle, producto.nombre, producto.precio_venta, Cantidad, venta.fecha
-  FROM detalle_venta INNER JOIN producto 
-  ON detalle_venta.id_Producto = producto.id_Producto 
-  INNER JOIN venta ON detalle_venta.id_Venta = venta.id_Venta;
-  `;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error al obtener ventas:', err);
-      res.status(500).json({ error: 'Error al obtener ventas' });
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
-
-router.get('/readVenta', (req, res) => {
-  const sql = `
-  SELECT * from detalle_venta
+  select detalle_venta.id_Detalle, usuario.nombre_Usuario, fecha, cliente.nombres, producto.nombre, 
+  producto.precio_venta, detalle_venta.Cantidad, tipo_pago
+  from venta inner join empleado
+  on venta.id_Empleado = empleado.id_Empleado
+  inner join usuario
+  on empleado.id_Usuario = usuario.id_Usuario
+  inner join cliente
+  on venta.id_Cliente = cliente.id_Cliente
+  inner join detalle_venta
+  on venta.id_Venta = detalle_venta.id_Venta
+  inner join producto
+  on detalle_venta.id_Producto = producto.id_Producto;
   `;
 
   db.query(sql, (err, result) => {
@@ -504,11 +420,11 @@ router.get('/readVenta', (req, res) => {
 
 router.post('/createventa', (req, res) => {
   // Extraer datos de la solicitud
-  const { id_Empleado, id_Cliente, detalle } = req.body;
+  const { id_Empleado, id_Cliente, tipo_pago, detalle } = req.body;
 
   // Realizar la inserción de la venta en la tabla Ventas
-  const sqlVenta = 'INSERT INTO venta (id_Empleado, id_Cliente) VALUES (?, ?)';
-  db.query(sqlVenta, [id_Empleado, id_Cliente], (err, result) => {
+  const sqlVenta = 'INSERT INTO venta (id_Empleado, id_Cliente, tipo_pago) VALUES (?, ?, ?)';
+  db.query(sqlVenta, [id_Empleado, id_Cliente, tipo_pago], (err, result) => {
     if (err) {
       console.error('Error al insertar venta:', err);
       return res.status(500).json({ error: 'Error al insertar venta' });
@@ -529,6 +445,30 @@ router.post('/createventa', (req, res) => {
       res.status(201).json({ message: 'Venta y detalle de venta agregados con éxito' });
     });
   });
+});
+
+//Sentencia
+//curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
+//-------------------------------------------------------------------------------------
+
+
+router.delete('/deletecategoria/:id_Categoria', (req, res) => {
+// Obtén el ID del registro a eliminar desde los parámetros de la URL
+const id_Categoria = req.params.id_Categoria;
+
+// Realiza la consulta SQL para eliminar el registro por ID
+const sql = 'DELETE FROM categoria WHERE id_Categoria = ?';
+
+// Ejecuta la consulta
+db.query(sql, [id_Categoria], (err, result) => {
+  if (err) {
+    console.error('Error al eliminar un registro de la tabla categoria:', err);
+    res.status(500).json({ error: 'Error al eliminar un registro de la tabla ' });
+  } else {
+    // Devuelve un mensaje de éxito
+    res.status(200).json({ message: 'Registro eliminado exitosamente' });
+  }
+});
 });
 
 
