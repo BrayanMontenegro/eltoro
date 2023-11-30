@@ -10,11 +10,10 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Empleado (
 id_Empleado INT PRIMARY KEY AUTO_INCREMENT,
-nombres VARCHAR(50) NOT NULL,
-apellidos varchar(50) NOT NULL,
-direccion varchar(100) NOT NULL,
 telefono VARCHAR(8) NOT NULL,
-correo varchar(40) NOT NULL
+correo varchar(40) NOT NULL,
+id_Usuario INT UNIQUE,
+FOREIGN KEY (id_Usuario) REFERENCES usuario (id_Usuario)
 );
 
 CREATE TABLE Categoria (
@@ -50,6 +49,7 @@ CREATE TABLE Venta (
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   id_Empleado INT NOT NULL,
   id_Cliente INT NOT NULL,
+  tipo_pago VARCHAR(30) NOT NULL,
 FOREIGN KEY (id_Empleado) REFERENCES empleado (id_Empleado),
 FOREIGN KEY (id_Cliente) REFERENCES cliente (id_Cliente)
 );
@@ -63,3 +63,42 @@ CREATE TABLE Detalle_Venta (
  FOREIGN KEY (id_Producto) REFERENCES producto (id_Producto),
  FOREIGN KEY (id_Venta) REFERENCES venta (id_Venta)
 );
+
+/*Procedimientos para la tabla categoria*/
+DELIMITER //
+CREATE PROCEDURE MostrarCategoria()
+BEGIN
+    SELECT id_Categoria, nom_categoria
+    FROM categoria;
+END;
+//
+
+DELIMITER //
+CREATE PROCEDURE CrearCategoria(
+    IN nom_categoria VARCHAR(30)
+)
+BEGIN
+    INSERT INTO categoria(nom_categoria)
+    VALUES (nom_categoria);
+END;
+//
+
+DELIMITER //
+CREATE PROCEDURE ModificarCategoria(
+    IN id_Categoria INT,
+    IN nom_categoria VARCHAR(30)
+)
+BEGIN
+    UPDATE categoria
+    SET
+        nom_categoria = nom_categoria
+    WHERE id_Categoria = id_Categoria;
+END;
+//
+
+DELIMITER //
+CREATE PROCEDURE EliminarCategoria (IN id_Categoria INT)
+BEGIN
+    DELETE FROM categoria WHERE id_Categoria = id_Categoria;
+END;
+//
