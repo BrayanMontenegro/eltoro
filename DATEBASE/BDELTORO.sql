@@ -102,3 +102,23 @@ BEGIN
     DELETE FROM categoria WHERE id_Categoria = id_Categoria;
 END;
 //
+
+DELIMITER $$
+CREATE DEFINER = CURRENT_USER 
+TRIGGER ActualizacionStock
+BEFORE INSERT ON detalle_venta
+FOR EACH ROW 
+BEGIN
+	DECLARE id INT DEFAULT 0;
+    DECLARE cant INT DEFAULT 0;
+    
+    SET id=NEW.id_Producto;
+    SET cant=NEW.Cantidad;
+    
+    IF ((SELECT stock FROM producto WHERE producto.id_Producto=id) > cant)  THEN
+    UPDATE producto SET stock=stock - cant
+    WHERE id_Producto = id;
+ELSE 
+SIGNAL SQLSTATE 'ERROR' SET MESSAGE_TEXT = 'Cantidad de producto no disponible';
+END IF;
+END$$ 

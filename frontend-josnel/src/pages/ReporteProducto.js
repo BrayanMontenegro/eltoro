@@ -4,24 +4,10 @@ import { Button, Row, Col, Card, Container } from 'react-bootstrap';  // Importa
 import jsPDF from 'jspdf';  // Importación de jsPDF para la generación de documentos PDF
 import Chart from 'chart.js/auto';  // Importación de Chart.js para gráficos
 import '../styles/App.css';  // Importación de estilos CSS desde '../styles/App.css'
+import Footer from '../components/Footer';
 
 // Importa la biblioteca html2canvas, que proporciona funciones para capturar y convertir el contenido HTML, incluidos elementos del DOM, en imágenes de lienzo (canvas).
 import html2canvas from 'html2canvas';
-
-//Asegúrate de instalar html2canvas en tu proyecto si aún no lo has hecho.
-//  npm install html2canvas
-
-//Asegúrate de instalar jsPDF en tu proyecto si aún no lo has hecho
-//  npm install jspdf
-//Documentación:  https://github.com/parallax/jsPDF
-
-//Asegúrate de instalar Chart.js en tu proyecto si aún no lo has hecho
-//  npm install chart.js
-//Documentación:  https://www.chartjs.org/docs/latest/
-
-
-//Documentacion de react-bootstrap en caso de querer emplear otro componente en su intefaz
-//  https://react-bootstrap.netlify.app/
 
 
 function Estadisticas({ rol }) {  // Declaración del componente Estadisticas con el argumento 'rol'
@@ -160,9 +146,9 @@ function Estadisticas({ rol }) {  // Declaración del componente Estadisticas co
             </Row>
         </Container>
 
-
+        <Footer/>
     </div>
-  );
+    );
 }
 
 export default Estadisticas;  // Exporta el componente Estadisticas para su uso en otras partes de la aplicación

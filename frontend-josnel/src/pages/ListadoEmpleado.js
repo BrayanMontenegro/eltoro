@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Card } from 'react-bootstrap';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function ListEmpleado({rol}) {
     const [empleados, setEmpleados] = useState([]);
 
     // Realiza una solicitud GET al servidor para obtener las ventas
     useEffect(() => {
-        fetch('http://localhost:5000/crud/readempleado')
+        fetch('http://localhost:5000/crud/readEmpleado')
         .then((response) => response.json())
         .then((data) => setEmpleados(data))
         .catch((error) => console.error('Error al obtener los empleados:', error));
@@ -25,9 +26,8 @@ function ListEmpleado({rol}) {
                 <thead>
                 <tr>
                     <th>N°</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Dirección</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
                     <th>Teléfono</th>
                     <th>Correo</th>
                 </tr>
@@ -47,6 +47,7 @@ function ListEmpleado({rol}) {
             </Card.Body>
         </Card>
 
+        <Footer/>
         </div>
     );
 }

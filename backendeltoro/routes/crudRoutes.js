@@ -89,7 +89,7 @@ module.exports = (db) => {
   
     // Llama al procedimiento almacenado
     db.query(
-      `CALL ${storedProcedure}(?, ?, ?)`,
+      `CALL ${storedProcedure}(?, ?)`,
       [id_Categoria, nom_categoria],
       (err, result) => {
         if (err) {
@@ -124,22 +124,7 @@ module.exports = (db) => {
 
   router.get('/readEmpleado', (req, res) => {
     const sql = `
-    select id_Empleado, usuario.nombre_Usuario from empleado inner join usuario on empleado.id_Usuario = usuario.id_Usuario;
-    `;
-  
-    db.query(sql, (err, result) => {
-      if (err) {
-        console.error('Error al obtener empleado:', err);
-        res.status(500).json({ error: 'Error al obtener empleado' });
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  });
-
-  router.get('/readempleado', (req, res) => {
-    const sql = `
-    select usuario.nombre_Usuario, usuario.rol, telefono, correo
+    select id_Empleado, usuario.nombre_Usuario, usuario.rol, telefono, correo
     from empleado inner join usuario
     on empleado.id_Usuario = usuario.id_Usuario;
     `;
@@ -450,28 +435,6 @@ router.post('/createventa', (req, res) => {
 //Sentencia
 //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
 //-------------------------------------------------------------------------------------
-
-
-router.delete('/deletecategoria/:id_Categoria', (req, res) => {
-// Obtén el ID del registro a eliminar desde los parámetros de la URL
-const id_Categoria = req.params.id_Categoria;
-
-// Realiza la consulta SQL para eliminar el registro por ID
-const sql = 'DELETE FROM categoria WHERE id_Categoria = ?';
-
-// Ejecuta la consulta
-db.query(sql, [id_Categoria], (err, result) => {
-  if (err) {
-    console.error('Error al eliminar un registro de la tabla categoria:', err);
-    res.status(500).json({ error: 'Error al eliminar un registro de la tabla ' });
-  } else {
-    // Devuelve un mensaje de éxito
-    res.status(200).json({ message: 'Registro eliminado exitosamente' });
-  }
-});
-});
-
-
 
     return router;
 };

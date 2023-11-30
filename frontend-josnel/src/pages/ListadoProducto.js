@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import { FaSistrix, FaPencil, FaTrashCan} from 'react-icons/fa6';
+import Footer from '../components/Footer';
 
 function ListProducto({rol}) {
     const [productos, setProductos] = useState([]);
@@ -350,6 +351,7 @@ function ListProducto({rol}) {
             </Modal.Body>
         </Modal>
 
+        <Footer/>
         </div>
     );
 }

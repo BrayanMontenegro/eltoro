@@ -4,6 +4,7 @@ import { Button, Row, Col, Card, Container } from 'react-bootstrap';  // Importa
 import jsPDF from 'jspdf';  // Importación de jsPDF para la generación de documentos PDF
 import Chart from 'chart.js/auto';  // Importación de Chart.js para gráficos
 import '../styles/App.css';  // Importación de estilos CSS desde '../styles/App.css'
+import Footer from '../components/Footer';
 
 // Importa la biblioteca html2canvas, que proporciona funciones para capturar y convertir el contenido HTML, incluidos elementos del DOM, en imágenes de lienzo (canvas).
 import html2canvas from 'html2canvas';
@@ -145,9 +146,9 @@ function Estadisticas({ rol }) {  // Declaración del componente Estadisticas co
             </Row>
         </Container>
 
-
+        <Footer/>
     </div>
-  );
+    );
 }
 
 export default Estadisticas;  // Exporta el componente Estadisticas para su uso en otras partes de la aplicación

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import {FaPencil, FaTrashCan} from 'react-icons/fa6';
+import Footer from '../components/Footer';
 
 function ListCategoria({rol}) {
     const [categorias, setCategorias] = useState([]);
@@ -80,7 +81,7 @@ function ListCategoria({rol}) {
         const confirmation = window.confirm('¿Seguro que deseas eliminar esta categoria?');
         if (confirmation) {
         // Realiza la solicitud DELETE al servidor para eliminar la categoria
-        fetch(`http://localhost:5000/crud/deletecategoria/${id_Categoria}`, {
+        fetch(`http://localhost:5000/crud/deleteCategoria/${id_Categoria}`, {
             method: 'DELETE',
         })
             .then((response) => {
@@ -183,6 +184,7 @@ function ListCategoria({rol}) {
             </Modal.Footer>
         </Modal>
 
+           <Footer/> 
         </div>
     );
 }

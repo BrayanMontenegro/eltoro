@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
+import Footer from '../components/Footer';
 
 function Cliente({rol}) {
 
@@ -169,7 +170,8 @@ function Cliente({rol}) {
             </Card.Body>
             </Card>
         </Container>
-
+        
+        <Footer/>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 import {FaPencil, FaTrashCan} from 'react-icons/fa6';
+import Footer from '../components/Footer';
 
 function ListCliente({rol}) {
     const [clientes, setClientes] = useState([]);
@@ -273,6 +274,7 @@ function ListCliente({rol}) {
             </Modal.Footer>
         </Modal>
 
+        <Footer/> 
         </div>
     );
 }

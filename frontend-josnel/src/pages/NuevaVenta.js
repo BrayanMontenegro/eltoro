@@ -3,6 +3,7 @@ import { Button, Container, Card, Row, Col, Form, Modal, FloatingLabel, Table } 
 import { FaSearch, FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Header from '../components/Header';
 import '../styles/App.css';
+import Footer from '../components/Footer';
 
 function Venta({ rol }) {
 
@@ -37,7 +38,6 @@ function Venta({ rol }) {
     };
 
     const AgregarDetalleProducto = () => {
-
         if (selectedProducto && Cantidad) {
         const nuevoDetalle = {
             id_Producto: selectedProducto.id_Producto,
@@ -410,7 +410,7 @@ function Venta({ rol }) {
             ))}
             </Modal.Body>
         </Modal>
-
+                <Footer/>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'r
 import Header from '../components/Header';
 import '../styles/App.css';
 import { FaPlus } from 'react-icons/fa6';
+import Footer from '../components/Footer';
 
 function Producto({rol}) {
 
@@ -291,7 +292,7 @@ const handleSubmitCategoria = async (e) => {
             </Modal.Body>
         </Modal>
 
-
+        <Footer/>
         </div>
     );
 }
